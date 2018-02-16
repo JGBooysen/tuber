@@ -22,11 +22,16 @@ dist/
 node_modules/
 tmp/
 temp/
+www/
 hooks/
 platforms/
 plugins/
 plugins/android.json
 plugins/ios.json
+<<<<<<< Updated upstream
+=======
+
+>>>>>>> Stashed changes
 $RECYCLE.BIN/
 
 .DS_Store
