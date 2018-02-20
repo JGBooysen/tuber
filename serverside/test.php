@@ -20,9 +20,17 @@ and open the template in the editor.
         if (isset($_POST['btnTest']))
         {
            
-            $obj = new TutorClass("English", "Language");
+            $obj = new subjectClass("English", "Language");
             
-            $obj->AddClass();
+            $data= $obj->getClasses();
+            foreach ($data as $value)
+            {
+                echo $value->getName();
+                echo ' ';
+                echo $value->getDescription();
+                echo "<br>";
+                
+            }
         }
         ?>
         

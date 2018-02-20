@@ -11,6 +11,7 @@
  *
  * @author Stephan
  */
+require_once './DBConnection.php';
 class school
 {
     private $schoolID;
@@ -74,7 +75,11 @@ class school
         $this->schoolName = $schoolName;
     }
 
-
+    function inseertSchool()
+    {
+        $connection = new DBConnection();
+        $connection->InsertSchool($this);
+    }
 
     
 }

@@ -11,6 +11,7 @@
  *
  * @author Stephan
  */
+require_once './DBConnection.php';
 class student extends ParentClass
 {
     
@@ -63,6 +64,10 @@ class student extends ParentClass
         $this->surname = $surname;
     }
 
-
+    function insertStudent()
+    {
+        $connection = new DBConnection();
+        $connection->InsertStudent($this);
+    }
 
 }

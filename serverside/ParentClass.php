@@ -11,6 +11,7 @@
  *
  * @author Stephan
  */
+require_once './DBConnection.php';
 class ParentClass
 {
     private $accountBalance;
@@ -22,8 +23,10 @@ class ParentClass
     private $surname;
     private $streetName;
     private $username;
-    
-    function __construct()
+    private $password;
+  
+
+        function __construct()
     {
         
     }
@@ -118,6 +121,20 @@ class ParentClass
     function setUsername($username)
     {
         $this->username = $username;
+    }
+      function getPassword()
+    {
+        return $this->password;
+    }
+
+    function setPassword($password)
+    {
+        $this->password = $password;
+    }
+    function InseertParent()
+    {
+        $connection = new DBConnection();
+        $connection->insertParent($this);
     }
 
 

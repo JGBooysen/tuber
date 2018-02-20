@@ -13,7 +13,7 @@
  * @author Stephan
  */
 require_once './DBConnection.php';
-class TutorClass {
+class subjectClass {
     
     private $classID;
     private $name;
@@ -57,11 +57,14 @@ class TutorClass {
     function AddClass()
     {
         $connection = new DBConnection();
-        $connection->InsertClass($this);
-      
-       
-       
+        $connection->InsertClass($this); 
+    }
+    function getClasses()
+    {
+        $connection = new DBConnection();
         
+        $data=$connection->getClasses();
+        return $data;
     }
     
 

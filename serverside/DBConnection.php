@@ -32,7 +32,7 @@ class DBConnection
         $this->dbLink = new mysqli($this->host, $this->user, $this->password, $this->database);
     }  
     
-           function InsertClass(TutorClass $obj)
+           function InsertClass(subjectClass $obj)
     {
            //Insert subject Class
           
@@ -73,7 +73,7 @@ class DBConnection
             }
             else
             {
-                 echo json_encode("Error");
+                 echo json_encode("Error in main");
             }
             
            $sqlTwo 	= "Call insertStudentParent('".$parentID."')";
@@ -83,14 +83,14 @@ class DBConnection
             }
             else
             {
-                 echo json_encode("Error");
+                 echo json_encode("Error in Link");
             }
 
             echo json_encode(array('message' => 'Congratulations the student ' . $name . ' was added to the database'));
          }
         
         
-    }
+    
     function InsertSchool(school $obj)
     {
         
@@ -115,273 +115,125 @@ class DBConnection
     
         
     }
-    function InsertContact($obj)
+    function InsertContact(Contact $obj)
     {
-        $contact 		     = filter_var($obj->contact, FILTER_SANITIZE_STRING, FILTER_FLAG_ENCODE_LOW);
-         try {
-            $sql 	= "Call insertContact(?)";
-          $stmt =$pdo->prepare($sql);
-          $stmt->bindParam(1,$contact ,PDO::PARAM_STR);
+       $contact	  = filter_var($obj->getContactNum(), FILTER_SANITIZE_STRING, FILTER_FLAG_ENCODE_LOW);
+            $sql 	= "Call insertContact('".$contact."')";
+            if (mysqli_query($this->dbLink, $sql))
+            {
+                 echo json_encode(array('message' => 'Congratulations the contact ' . $contact . ' was added to the database'));
+            }
+            else
+            {
+                echo json_encode("Error");
+            }
           
-          $stmt->execute();
-            echo json_encode(array('message' => 'Congratulations the contact ' . $contact . ' was added to the database'));
-         }
-         // Catch any errors in running the prepared statement
-         catch(PDOException $e)
-         {
-            echo $e->getMessage();
-         }
+         
+           
+         
     }
     
-    function InsertEmail($obj,$pdo)
+    function InsertEmail(Email $obj)
     {
-            $email 		     = filter_var($obj->email, FILTER_SANITIZE_STRING, FILTER_FLAG_ENCODE_LOW);
-         try {
-            $sql 	= "Call insertEmail(?)";
-          $stmt =$pdo->prepare($sql);
-          $stmt->bindParam(1,$email ,PDO::PARAM_STR);
+            $email 		     = filter_var($obj->getEmailAddress(), FILTER_SANITIZE_STRING, FILTER_FLAG_ENCODE_LOW);
+       
+            $sql 	= "Call insertEmail('".$email."')";
+        
+           if (mysqli_query($this->dbLink, $sql))
+            {
+                  echo json_encode(array('message' => 'Congratulations the email ' . $email . ' was added to the database'));
+            }
+            else
+            {
+                echo json_encode("Error");
+            }
           
-          $stmt->execute();
-            echo json_encode(array('message' => 'Congratulations the email ' . $email . ' was added to the database'));
-         }
-         // Catch any errors in running the prepared statement
-         catch(PDOException $e)
-         {
-            echo $e->getMessage();
-         } 
+           
+      
     }
     
-   function insertParent($obj,$pdo)
+   function insertParent(ParentClass $obj)
    {
-         $name 		     = filter_var($obj->name, FILTER_SANITIZE_STRING, FILTER_FLAG_ENCODE_LOW);
-          $surname 		     = filter_var($obj->surname, FILTER_SANITIZE_STRING, FILTER_FLAG_ENCODE_LOW);
-           $username 		     = filter_var($obj->username, FILTER_SANITIZE_STRING, FILTER_FLAG_ENCODE_LOW);
-            $password 		     = filter_var($obj->password, FILTER_SANITIZE_STRING, FILTER_FLAG_ENCODE_LOW);
-            $streetName 		     = filter_var($obj->streetName, FILTER_SANITIZE_STRING, FILTER_FLAG_ENCODE_LOW);
-            $city 		     = filter_var($obj->city, FILTER_SANITIZE_STRING, FILTER_FLAG_ENCODE_LOW);
-            $houseNum 		     = filter_var($obj->houseNum, FILTER_SANITIZE_STRING, FILTER_FLAG_ENCODE_LOW);
-            $nationalID 		     = filter_var($obj->nationalID, FILTER_SANITIZE_STRING, FILTER_FLAG_ENCODE_LOW);
-         try {
-            $sql 	= "Call insertParent(?,?,?,?,?,?,?,?)";
-          $stmt =$pdo->prepare($sql);
-          $stmt->bindParam(1,$username ,PDO::PARAM_STR);
-          $stmt->bindParam(2,$password ,PDO::PARAM_STR);
-          $stmt->bindParam(3,$name ,PDO::PARAM_STR);
-          $stmt->bindParam(4,$surname ,PDO::PARAM_STR);
-          $stmt->bindParam(5,$streetName ,PDO::PARAM_STR);
-          $stmt->bindParam(6,$city ,PDO::PARAM_STR);
-          $stmt->bindParam(7,$houseNum ,PDO::PARAM_STR);
-          $stmt->bindParam(8,$nationalID ,PDO::PARAM_STR);
-          $stmt->execute();
-            echo json_encode(array('message' => 'Congratulations the parent ' . $name . ' was added to the database'));
-         }
-         // Catch any errors in running the prepared statement
-         catch(PDOException $e)
-         {
-            echo $e->getMessage();
-         } 
-   }
-   function insertStudentClass($obj,$pdo)
-   {
-                 $tutorClassID		     = filter_var($obj->tutorClassID, FILTER_SANITIZE_STRING, FILTER_FLAG_ENCODE_LOW);
-                  $studentID		     = filter_var($obj->studentID, FILTER_SANITIZE_STRING, FILTER_FLAG_ENCODE_LOW);
-         try {
-            $sql 	= "Call insertParent(?,?)";
-          $stmt =$pdo->prepare($sql);
-          $stmt->bindParam(1,$tutorClassID ,PDO::PARAM_INT);
-          $stmt->bindParam(2,$studentID ,PDO::PARAM_INT);
+         $name 		     = filter_var($obj->getName(), FILTER_SANITIZE_STRING, FILTER_FLAG_ENCODE_LOW);
+          $surname 		     = filter_var($obj->getSurname(), FILTER_SANITIZE_STRING, FILTER_FLAG_ENCODE_LOW);
+           $username 		     = filter_var($obj->getUsername(), FILTER_SANITIZE_STRING, FILTER_FLAG_ENCODE_LOW);
+            $password 		     = filter_var($obj->getPassword(), FILTER_SANITIZE_STRING, FILTER_FLAG_ENCODE_LOW);
+            $streetName 		     = filter_var($obj->getStreetName(), FILTER_SANITIZE_STRING, FILTER_FLAG_ENCODE_LOW);
+            $city 		     = filter_var($obj->getCity(), FILTER_SANITIZE_STRING, FILTER_FLAG_ENCODE_LOW);
+            $houseNum 		     = filter_var($obj->getHouseNum(), FILTER_SANITIZE_STRING, FILTER_FLAG_ENCODE_LOW);
+            $nationalID 		     = filter_var($obj->getNationalID(), FILTER_SANITIZE_STRING, FILTER_FLAG_ENCODE_LOW);
          
-          $stmt->execute();
-            echo json_encode(array('message' => 'Congratulations the class ' . $name . ' was added to the database'));
-         }
-         // Catch any errors in running the prepared statement
-         catch(PDOException $e)
-         {
-            echo $e->getMessage();
-         } 
+            $sql 	= "Call insertParent('".$username."','".$password."','".$name."','".$surname."','".$streetName."','".$city."','".$houseNum."','".$nationalID."')";
+            if (mysqli_query($this->dbLink, $sql))
+            {
+               echo json_encode(array('message' => 'Congratulations the parent ' . $name . ' was added to the database')); 
+            }
+            else
+            {
+                  echo json_encode('error');
+            }
    }
-   function insertTutor($obj,$pdo)
+   function insertStudentClass(tutorClass $obj,  student $objTwo)
    {
-                 $name		     = filter_var($obj->name, FILTER_SANITIZE_STRING, FILTER_FLAG_ENCODE_LOW);
-                  $surname	     = filter_var($obj->surname, FILTER_SANITIZE_STRING, FILTER_FLAG_ENCODE_LOW);
-                   $username		     = filter_var($obj->username, FILTER_SANITIZE_STRING, FILTER_FLAG_ENCODE_LOW);
-                  $password	     = filter_var($obj->password, FILTER_SANITIZE_STRING, FILTER_FLAG_ENCODE_LOW);
-                  $salary	     = filter_var($obj->salary, FILTER_SANITIZE_STRING, FILTER_FLAG_ENCODE_LOW);
-         try {
-            $sql 	= "Call insertTutor(?,?,?,?,?)";
-          $stmt =$pdo->prepare($sql);
-          $stmt->bindParam(1,$name ,PDO::PARAM_STR);
-          $stmt->bindParam(2,$surname ,PDO::PARAM_STR);
-           $stmt->bindParam(3,$username ,PDO::PARAM_STR);
-          $stmt->bindParam(4,$password ,PDO::PARAM_STR);
-          $stmt->bindParam(5,$salary ,PDO::PARAM_STR);
+                 $tutorClassID		     = filter_var($obj->getTutorClassID(), FILTER_SANITIZE_STRING, FILTER_FLAG_ENCODE_LOW);
+                  $studentID		     = filter_var($objTwo->getStudentID(), FILTER_SANITIZE_STRING, FILTER_FLAG_ENCODE_LOW);
          
-          $stmt->execute();
-            echo json_encode(array('message' => 'Congratulations the class ' . $name . ' was added to the database'));
-         }
-         // Catch any errors in running the prepared statement
-         catch(PDOException $e)
-         {
-            echo $e->getMessage();
-         } 
+            $sql 	= "Call insertStudentClass('".$tutorClassID."','".$studentID."')";
+          if (mysqli_query($this->dbLink, $sql))
+            {
+               echo json_encode(array('message' => 'Congratulations the parent ' . $name . ' was added to the database')); 
+            }
+            else
+            {
+                  echo json_encode('error');
+            }
    }
-   function getClass($pdo)
+   
+   function insertTutor(tutor $obj)
+   {
+                 $name		     = filter_var($obj->getName(), FILTER_SANITIZE_STRING, FILTER_FLAG_ENCODE_LOW);
+                  $surname	     = filter_var($obj->getSurname(), FILTER_SANITIZE_STRING, FILTER_FLAG_ENCODE_LOW);
+                   $username		     = filter_var($obj->getUsername(), FILTER_SANITIZE_STRING, FILTER_FLAG_ENCODE_LOW);
+                  $password	     = filter_var($obj->getPassword(), FILTER_SANITIZE_STRING, FILTER_FLAG_ENCODE_LOW);
+                  $salary	     = filter_var($obj->getSalary(), FILTER_SANITIZE_STRING, FILTER_FLAG_ENCODE_LOW);
+         
+            $sql 	= "Call insertTutor('".$name."','".$surname."','".$username."','".$password."','".$salary."')";
+         if (mysqli_query($this->dbLink, $sql))
+            {
+               echo json_encode(array('message' => 'Congratulations the parent ' . $name . ' was added to the database')); 
+            }
+            else
+            {
+                  echo json_encode('error');
+            }
+   }
+   function getClasses()
    {
       $data    = array();
 
-
-   // Attempt to query database table and retrieve data
-   try {
-      $stmt 	= $pdo->query('SELECT * FROM subjectclass');
-      while($row  = $stmt->fetch(PDO::FETCH_OBJ))
-      {
-         // Assign each row of data to associative array
-         $data[] = $row;
-      }
-
-      // Return data as JSON
-      echo json_encode($data);
-   }
-   catch(PDOException $e)
-   {
-      echo $e->getMessage();
-   }
-   }
-    
-    //establish the link to switch function types
-    function getData($pdo)
-    {
-          $json    =  file_get_contents('http://localhost:8080/Tuber/test.php/');
-          $obj     =  json_decode($json);
-          
-          
-     
-            $keySecondary = strip_tags($obj->keyTwo);
-            $key     = strip_tags($obj->key);
-            $this->switchKeyOne($key,$keySecondary, $obj,$pdo);
  
-         
-          
-    }
-    function switchCreate($keySecond,$obj,$pdo)
-    {
-            switch ($keySecond)
-      {
-          //Insert subject Class
-          case "class":
-                {
-                    $this->InsertClass($obj,$pdo);     
-                    break;
-                }
-          
-                //Insert student
-           case "student":
-               {
-                    $this->InsertStudent($obj,$pdo);     
-                    break;
-               }
-          case "school":
-               {
-                    $this->InsertSchool($obj,$pdo);     
-                    break;
-               }
-          case "contact":
-               {
-                    $this->InsertContact($obj,$pdo);     
-                    break;
-               }
-           case "email":
-               {
-                    $this->InsertEmail($obj,$pdo);     
-                    break;
-               }   
-           case "parent":
-               {
-                    $this->insertParent($obj,$pdo);     
-                    break;
-               }
-           case "studentClass":
-               {
-                    $this->insertStudentClass($obj,$pdo);     
-                    break;
-               } 
-               case "tutor":
-               {
-                    $this->insertTutor($obj,$pdo);     
-                    break;
-               } 
-           default : echo 'sorry';
-               break;
-      }
-    }
-     function switchUpdate($keySecond,$obj,$pdo)
-    {
-        switch ($keySecond)
-        {
-            case "":
-            {
-                
-             break;   
+     
+       $result = $this->dbLink->query("SELECT * FROM subjectclass");
+        if($result != null){
+            $rows = $result->fetch_all(MYSQLI_ASSOC);
+            foreach ($rows as $row) {
+                $Class = new subjectClass($row['className'], $row['classDescription']);
+                $Class->setClassID($row['classID']);
+                array_push($data, $Class);
             }
-           default : echo 'sorry';
-               break; 
+            
+        }else{
+            echo "No results found";
         }
-    }
-     function switchDelete($keySecond,$obj,$pdo)
-    {
-          switch ($keySecond)
-        {
-                 case "":
-            {
-                
-             break;   
-            }
-           default : echo 'sorry';
-               break;
-        }
-    }
-     function switchSelect($keySecond,$obj,$pdo)
-    {
-        switch ($keySecond)
-        {
-            case "class":
-                {
-                    $this->getClass($pdo);     
-                    break;
-                }
-                default : echo 'sorry';
-               break;
-        }
-    }
+        
+        return $data;
     
-    function switchKeyOne($key,$keySecond,$obj,$pdo)
-    {
-        switch($key)
-        {
-            case "create":
-            {
-                $this->switchCreate($keySecond, $obj, $pdo);
-                break;
-            }
-            case "update":
-            {
-                $this->switchUpdate($keySecond, $obj, $pdo);
-                break;
-            }
-              case "delete":
-            {
-                $this->switchDelete($keySecond, $obj, $pdo);
-                break;
-            }
-              case "select":
-            {
-                $this->switchSelect($keySecond, $obj, $pdo);
-                break;
-            }
-        default :echo 'Invalid';
-            break;
-                
-        }
-    }
-
+      
+ 
+   }
+    
+   
+}
+    //establish the link to switch function types
+   
 
