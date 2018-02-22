@@ -11,6 +11,7 @@
  *
  * @author Stephan
  */
+require_once './DBConnection.php';
 class Email
 {
    private $emailID;

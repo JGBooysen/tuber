@@ -75,11 +75,32 @@ class school
         $this->schoolName = $schoolName;
     }
 
-    function inseertSchool()
+    function insertSchool()
     {
         $connection = new DBConnection();
         $connection->InsertSchool($this);
     }
-
+  function insertSchoolEmail()
+    {
+        $connection = new DBConnection();
+        $connection->insertSchoolEmail($this);
+    }
+      function insertSchoolContact()
+    {
+        $connection = new DBConnection();
+        $connection->insertSchoolContact($this);
+    }
     
+       function getSchoolEmail()
+   {
+       $connection = new DBConnection();
+        $data=$connection->getSchoolEmail($this);
+        return $data;
+   }
+   function getSchoolContact()
+   {
+       $connection = new DBConnection();
+       $data= $connection->getSchoolContact($this);
+       return $data;
+   }
 }

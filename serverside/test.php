@@ -16,18 +16,19 @@ and open the template in the editor.
         </form>
         
         <?php
-        require_once './Class.php';
+        require_once './ParentClass.php';
+       
         if (isset($_POST['btnTest']))
         {
            
-            $obj = new subjectClass("English", "Language");
-            
-            $data= $obj->getClasses();
+            $obj = new ParentClass();
+            $obj->setParentID(1);
+            $data= $obj->getParentContact();
             foreach ($data as $value)
             {
-                echo $value->getName();
-                echo ' ';
-                echo $value->getDescription();
+                echo $value->getContactNum();
+            
+               
                 echo "<br>";
                 
             }

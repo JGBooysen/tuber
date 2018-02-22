@@ -75,6 +75,11 @@ class tutorClass
         $this->classDate = $classDate;
     }
 
-
+       function getStudentSpecificClass()
+    {
+        $connection = new DBConnection();
+        $data=$connection->getSpecificStudentClass($this);
+        return $data;
+    }
 
 }

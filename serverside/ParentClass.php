@@ -19,8 +19,8 @@ class ParentClass
     private $houseNum;
     private $nationalID;
     private $parentID;
-    private $name;
-    private $surname;
+    private $Parentname;
+    private $Parentsurname;
     private $streetName;
     private $username;
     private $password;
@@ -58,12 +58,12 @@ class ParentClass
         return $this->parentID;
     }
 
-    function getName()
+    function getParentName()
     {
         return $this->name;
     }
 
-    function getSurname()
+    function getParentSurname()
     {
         return $this->surname;
     }
@@ -103,12 +103,12 @@ class ParentClass
         $this->parentID = $parentID;
     }
 
-    function setName($name)
+    function setParentName($name)
     {
         $this->name = $name;
     }
 
-    function setSurname($surname)
+    function setParentSurname($surname)
     {
         $this->surname = $surname;
     }
@@ -131,12 +131,39 @@ class ParentClass
     {
         $this->password = $password;
     }
-    function InseertParent()
+    function InsertParent()
     {
         $connection = new DBConnection();
         $connection->insertParent($this);
     }
-
-
+ function InsertParentEmail()
+    {
+        $connection = new DBConnection();
+        $connection->insertParentEmail($this);
+    }
+ function InsertParentContact()
+    {
+        $connection = new DBConnection();
+        $connection->insertParentContact($this);
+    }
+    function getStudentParent()
+    {
+        $connection = new DBConnection();
+        $data=$connection->getstudentParent($this);
+        return $data;
+    }
+       function getParentEmail()
+   {
+       $connection = new DBConnection();
+        $data=$connection->getParentEmail($this);
+        return $data;
+   }
+   function getParentContact()
+   {
+       $connection = new DBConnection();
+       $data= $connection->getParentContact($this);
+       return $data;
+   }
+    
 
 }

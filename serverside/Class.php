@@ -19,10 +19,9 @@ class subjectClass {
     private $name;
     private $description;
     
-    function __construct($name, $description)
+    function __construct()
     {
-        $this->name = $name;
-        $this->description = $description;
+        
     }
     function getClassID()
     {
@@ -66,7 +65,13 @@ class subjectClass {
         $data=$connection->getClasses();
         return $data;
     }
-    
+     function getTutorSpecificClass()
+    {
+        $connection = new DBConnection();
+        
+        $data=$connection->getTutorsSpecificClass($this);
+        return $data;
+    }
 
 
 

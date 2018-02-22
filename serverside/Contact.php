@@ -16,6 +16,7 @@ class Contact
 {
     private $contactID;
     private $contactNum;
+    
     function __construct()
     {
         
